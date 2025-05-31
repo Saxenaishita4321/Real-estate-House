@@ -1,7 +1,8 @@
 import User from '../models/user_model.js';
 import bcryptjs from 'bcryptjs'; //used to encrypt tha password
+import { errorHandler } from '../utils/error.js';
 
-export const signup = async (req, res) => {
+export const signup = async (req, res,next) => {
   try {
     const { username, email, password } = req.body;
     const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -18,7 +19,8 @@ export const signup = async (req, res) => {
     }
 
     // ❌ Handle other server errors
-    console.error(error);
-    res.status(500).json("Something went wrong.");
+    // console.error(error);
+    // res.status(500).json("Something went wrong.");
+    next(error);
   }
 };
